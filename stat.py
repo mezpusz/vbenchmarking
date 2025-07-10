@@ -3,7 +3,8 @@
 import statistics, sys
 
 SEP = '\t'
-MEASUREMENTS = ['status', 'cputime (s)', 'walltime (s)', 'memory (MB)', 'szs-status']
+MEASUREMENTS = ['status', 'cputime (s)', 'walltime (s)', 'memory (MB)', 'szs-status', 'instruction-count']
+MLEN = len(MEASUREMENTS)
 
 if __name__ == "__main__":
 
@@ -19,9 +20,9 @@ if __name__ == "__main__":
 
   num_runs = 0
 
-  for i in range(1,len(header),len(MEASUREMENTS)):
+  for i in range(1,len(header),MLEN):
     num_runs += 1
-    for j,k in enumerate(range(i,i+len(MEASUREMENTS))):
+    for j,k in enumerate(range(i,i+MLEN)):
       assert(MEASUREMENTS[j]==header[k])
 
   results = {}
@@ -30,9 +31,9 @@ if __name__ == "__main__":
     vals = row.split('\t')
 
     curr_benchmark = []
-    for i in range(1,len(vals),len(MEASUREMENTS)):
+    for i in range(1,len(vals),MLEN):
       curr = {}
-      for j,k in enumerate(range(i,i+len(MEASUREMENTS))):
+      for j,k in enumerate(range(i,i+MLEN)):
         curr[header[k]] = vals[k]
       curr_benchmark.append(curr)
 
@@ -41,19 +42,20 @@ if __name__ == "__main__":
   print('total {}'.format(len(results)))
 
   for i in range(num_runs):
-    mean_cputime = statistics.mean([float(v[i]['cputime (s)']) for k,v in results.items()])
-    mean_memory = statistics.mean([float(v[i]['memory (MB)']) for k,v in results.items()])
+    cputime = sum([float(v[i]['cputime (s)']) for k,v in results.items()])
+    instructions = sum([float(v[i]['instruction-count']) for k,v in results.items()])
+    memory = sum([float(v[i]['memory (MB)']) for k,v in results.items()])
 
     def solved(row, i, val):
       return row[i]['status'] == val
 
     def solved_unique(row, i, val):
-      return row[i]['status'] == val and sum([1 for j in range(num_runs) if i != j and row[j]['status'] == val]) == 0
+      return row[i]['status'] == val and len([j for j in range(num_runs) if i != j and row[j]['status'] == val]) == 0
 
     unsat = sum([1 for k,v in results.items() if solved(v, i, 'true')])
     unsat_unique = sum([1 for k,v in results.items() if solved_unique(v, i, 'true')])
     sat = sum([1 for k,v in results.items() if solved(v, i, 'false')])
     sat_unique = sum([1 for k,v in results.items() if solved_unique(v, i, 'false')])
 
-    print("run {} unsat: {} ({}) sat: {} ({}) mean cputime: {} mean memory: {}".format(i, unsat, unsat_unique, sat, sat_unique, mean_cputime, mean_memory))
+    print("run {} unsat: {} ({}) sat: {} ({}) cputime: {} instructions: {} memory: {}".format(i, unsat, unsat_unique, sat, sat_unique, cputime, instructions, memory))
 

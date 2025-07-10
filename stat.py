@@ -1,18 +1,24 @@
 #!/usr/bin/env python3
 
-import statistics, sys
+import argparse
 
 SEP = '\t'
-MEASUREMENTS = ['status', 'cputime (s)', 'walltime (s)', 'memory (MB)', 'szs-status', 'instruction-count']
+MEASUREMENTS = ['status', 'cputime (s)', 'walltime (s)', 'memory (MB)', 'instruction-count', 'szs-status']
 MLEN = len(MEASUREMENTS)
 
 if __name__ == "__main__":
 
-  if len(sys.argv) != 2:
-    print("syntax: stat.py <csv_file>")
-    exit(1)
+  parser = argparse.ArgumentParser()
+  parser.add_argument('filename')
+  parser.add_argument('-all', action=argparse.BooleanOptionalAction)
+  parser.add_argument('-unsat', action=argparse.BooleanOptionalAction)
+  parser.add_argument('-sat', action=argparse.BooleanOptionalAction)
+  parser.add_argument('-cputime', action=argparse.BooleanOptionalAction)
+  parser.add_argument('-instructions', action=argparse.BooleanOptionalAction)
+  parser.add_argument('-memory', action=argparse.BooleanOptionalAction)
+  args = parser.parse_args()
 
-  csv_file = open(sys.argv[1]).read().splitlines()
+  csv_file = open(args.filename).read().splitlines()
 
   tools = csv_file[0].split(SEP)
   run_sets = csv_file[1].split(SEP)
@@ -39,11 +45,12 @@ if __name__ == "__main__":
 
     results[vals[0]] = curr_benchmark
 
-  print('total {}'.format(len(results)))
+  print(f'total number of benchmarks {len(results)}')
+  print()
 
   for i in range(num_runs):
     cputime = sum([float(v[i]['cputime (s)']) for k,v in results.items()])
-    instructions = sum([float(v[i]['instruction-count']) for k,v in results.items()])
+    instructions = sum([int(v[i]['instruction-count']) for k,v in results.items()])
     memory = sum([float(v[i]['memory (MB)']) for k,v in results.items()])
 
     def solved(row, i, val):
@@ -57,5 +64,16 @@ if __name__ == "__main__":
     sat = sum([1 for k,v in results.items() if solved(v, i, 'false')])
     sat_unique = sum([1 for k,v in results.items() if solved_unique(v, i, 'false')])
 
-    print("run {} unsat: {} ({}) sat: {} ({}) cputime: {} instructions: {} memory: {}".format(i, unsat, unsat_unique, sat, sat_unique, cputime, instructions, memory))
+    run_str = f"run {i}"
+    if args.all or args.unsat:
+      run_str += f" unsat: {unsat} ({unsat_unique})"
+    if args.all or args.sat:
+      run_str += f" sat: {sat} ({sat_unique})"
+    if args.all or args.cputime:
+      run_str += f" cputime: {cputime} s"
+    if args.all or args.instructions:
+      run_str += f" instructions: {instructions} Mi"
+    if args.all or args.memory:
+      run_str += f" memory: {memory} MB"
+    print(run_str)
 

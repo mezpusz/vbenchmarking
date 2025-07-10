@@ -6,7 +6,6 @@
 
 <option name="--input_syntax">tptp</option>
 <option name="-i">20000</option>
-<option name="-stat">full</option>
 
 <rundefinition name="discount">
     <option name="-sa">discount</option>

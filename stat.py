@@ -3,7 +3,7 @@
 import argparse
 
 SEP = '\t'
-MEASUREMENTS = ['status', 'cputime (s)', 'walltime (s)', 'memory (MB)', 'instruction-count', 'szs-status']
+MEASUREMENTS = ['status', 'szs-status', 'cputime (s)', 'memory (MB)', 'instruction-count']
 MLEN = len(MEASUREMENTS)
 
 if __name__ == "__main__":

@@ -1,0 +1,24 @@
+<!DOCTYPE benchmark PUBLIC "+//IDN sosy-lab.org//DTD BenchExec benchmark 1.18//EN" "https://www.sosy-lab.org/benchexec/benchmark-1.18.dtd">
+<benchmark
+    tool="vampire"
+    memlimit="16 GB"
+    cpuCores="1">
+
+<rundefinition name="default">
+    <option name="--input_syntax">smtlib2</option>
+    <option name="-i">5000</option>
+    <option name="-ind">struct</option>
+    <option name="-indoct">on</option>
+</rundefinition>
+
+<tasks>
+    <includesfile>structural-induction.set</includesfile>
+</tasks>
+
+<columns>
+    <column title="szs-status">szs-status</column>
+    <column title="instruction-count">instruction-count</column>
+</columns>
+
+</benchmark>
+<!-- vim:fenc=utf-8 -->

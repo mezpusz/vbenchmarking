@@ -1,10 +1,7 @@
 #!/usr/bin/env python3
 
 import argparse
-
-SEP = '\t'
-MEASUREMENTS = ['status', 'szs-status', 'cputime (s)', 'memory (MB)', 'instruction-count']
-MLEN = len(MEASUREMENTS)
+from resultparser import parse, STATUS, CPUTIME, MEMORY, INSTRUCTIONS
 
 if __name__ == "__main__":
 
@@ -18,46 +15,21 @@ if __name__ == "__main__":
   parser.add_argument('-memory', action=argparse.BooleanOptionalAction)
   args = parser.parse_args()
 
-  csv_file = open(args.filename).read().splitlines()
-
-  tools = csv_file[0].split(SEP)
-  run_sets = csv_file[1].split(SEP)
-  header = csv_file[2].split(SEP)
-
-  num_runs = 0
-
-  for i in range(1,len(header),MLEN):
-    num_runs += 1
-    for j,k in enumerate(range(i,i+MLEN)):
-      assert(MEASUREMENTS[j]==header[k])
-
-  results = {}
-
-  for row in csv_file[3:]:
-    vals = row.split('\t')
-
-    curr_benchmark = []
-    for i in range(1,len(vals),MLEN):
-      curr = {}
-      for j,k in enumerate(range(i,i+MLEN)):
-        curr[header[k]] = vals[k]
-      curr_benchmark.append(curr)
-
-    results[vals[0]] = curr_benchmark
+  num_runs,header,results = parse(args.filename)
 
   print(f'total number of benchmarks {len(results)}')
   print()
 
   for i in range(num_runs):
-    cputime = sum([float(v[i]['cputime (s)']) for k,v in results.items()])
-    instructions = sum([int(v[i]['instruction-count']) for k,v in results.items()])
-    memory = sum([float(v[i]['memory (MB)']) for k,v in results.items()])
+    cputime = sum([float(v[i][CPUTIME]) for k,v in results.items()]) if CPUTIME in header else None
+    instructions = sum([int(v[i][INSTRUCTIONS]) for k,v in results.items()]) if INSTRUCTIONS in header else None
+    memory = sum([float(v[i][MEMORY]) for k,v in results.items()]) if MEMORY in header else None
 
     def solved(row, i, val):
-      return row[i]['status'] == val
+      return row[i][STATUS] == val
 
     def solved_unique(row, i, val):
-      return row[i]['status'] == val and len([j for j in range(num_runs) if i != j and row[j]['status'] == val]) == 0
+      return row[i][STATUS] == val and len([j for j in range(num_runs) if i != j and row[j][STATUS] == val]) == 0
 
     unsat = sum([1 for k,v in results.items() if solved(v, i, 'true')])
     unsat_unique = sum([1 for k,v in results.items() if solved_unique(v, i, 'true')])
@@ -76,4 +48,3 @@ if __name__ == "__main__":
     if args.all or args.memory:
       run_str += " memory: {:.2f} MB".format(memory)
     print(run_str)
-

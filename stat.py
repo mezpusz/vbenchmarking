@@ -70,10 +70,10 @@ if __name__ == "__main__":
     if args.all or args.sat:
       run_str += f" sat: {sat} ({sat_unique})"
     if args.all or args.cputime:
-      run_str += f" cputime: {cputime} s"
+      run_str += " cputime: {:.2f} s".format(cputime)
     if args.all or args.instructions:
       run_str += f" instructions: {instructions} Mi"
     if args.all or args.memory:
-      run_str += f" memory: {memory} MB"
+      run_str += " memory: {:.2f} MB".format(memory)
     print(run_str)
 

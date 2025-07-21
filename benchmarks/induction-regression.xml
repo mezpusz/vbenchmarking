@@ -1,0 +1,46 @@
+<!DOCTYPE benchmark PUBLIC "+//IDN sosy-lab.org//DTD BenchExec benchmark 1.18//EN" "https://www.sosy-lab.org/benchexec/benchmark-1.18.dtd">
+<benchmark
+    tool="vampire"
+    memlimit="16 GB"
+    cpuCores="1">
+
+<rundefinition>
+    <option name="--input_syntax">smtlib2</option>
+    <option name="-i">2000</option>
+</rundefinition>
+
+<tasks name="integer">
+    <option name="-ind">int</option>
+    <option name="-intinddb">on</option>
+    <include>/home/mhajdu/inductive_benchmarks/benchmarks/flat/int::*::smt2::*.smt2</include>
+</tasks>
+
+<tasks name="structural">
+    <option name="-ind">struct</option>
+    <option name="-indoct">on</option>
+    <include>/data/benchmarks/SMT-LIB/flat/UFDTLIA::20172804-Barrett::induction-vmcai2015::*.smt2</include>
+    <include>/home/mhajdu/inductive_benchmarks/benchmarks/flat/dty::*::crafted_*::smt2::*.smt2</include>
+</tasks>
+
+<tasks name="structural-generalization">
+    <option name="-ind">struct</option>
+    <option name="-indoct">on</option>
+    <option name="-indgen">on</option>
+    <include>/home/mhajdu/inductive_benchmarks/benchmarks/flat/dty::*::generated_*::smt2::*.smt2</include>
+</tasks>
+
+<tasks name="recursion">
+    <option name="-ind">struct</option>
+    <option name="-sik">recursion</option>
+    <option name="-newcnf">on</option>
+    <option name="-indoct">on</option>
+    <include>/home/mhajdu/inductive_benchmarks/benchmarks/flat/dty::*::crafted_*::smt2_rec::*.smt2</include>
+</tasks>
+
+<columns>
+    <column title="szs-status">szs-status</column>
+    <column title="instruction-count">instruction-count</column>
+</columns>
+
+</benchmark>
+<!-- vim:fenc=utf-8 -->

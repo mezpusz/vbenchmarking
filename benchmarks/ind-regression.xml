@@ -14,7 +14,7 @@
     <option name="-ind">int</option>
     <option name="-intinddb">on</option>
     <include>/home/mhajdu/inductive_benchmarks/benchmarks/flat/int::*::smt2::*.smt2</include>
-    <include>/home/mhajdu/vampire_benchmarks_flat/induction::oeis::*.smt2</include>
+    <includesfile>/home/mhajdu/vbenchmarking/benchmarks/oeis-rand5000.set</includesfile>
 </tasks>
 
 <tasks name="structural">
@@ -38,15 +38,6 @@
     <option name="-indoct">on</option>
     <include>/home/mhajdu/inductive_benchmarks/benchmarks/flat/dty::*::crafted_*::smt2_rec::*.smt2</include>
     <include>/home/mhajdu/vampire_benchmarks_flat/induction::tip::*.smt2</include>
-</tasks>
-
-<tasks name="synthesis">
-    <option name="-ind">struct</option>
-    <option name="-indgo">off</option>
-    <option name="-tgt">off</option>
-    <option name="-ins">0</option>
-    <option name="-nm">0</option>
-    <include>/home/mhajdu/vampire_benchmarks_flat/synthesis::R_UFDT::*.smt2</include>
 </tasks>
 
 <columns>

@@ -16,7 +16,7 @@
 </rundefinition>
 
 <tasks>
-    <includesfile>tptp.set</includesfile>
+    <include>/data/benchmarks/TPTP/Problems/*/*.p</include>
 </tasks>
 
 <columns>

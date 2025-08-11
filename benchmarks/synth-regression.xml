@@ -1,0 +1,53 @@
+<!DOCTYPE benchmark PUBLIC "+//IDN sosy-lab.org//DTD BenchExec benchmark 1.18//EN" "https://www.sosy-lab.org/benchexec/benchmark-1.18.dtd">
+<benchmark
+    tool="vampire"
+    memlimit="16 GB"
+    cpuCores="1">
+
+<rundefinition>
+    <option name="--input_syntax">smtlib2</option>
+    <option name="-i">5000</option>
+    <option name="-sa">discount</option>
+</rundefinition>
+
+<tasks name="non-recursive">
+    <option name="-tgt">off</option>
+    <option name="-ins">0</option>
+    <option name="-nm">0</option>
+    <include>/home/mhajdu/vampire_benchmarks_flat/synthesis::NR_*.smt2</include>
+</tasks>
+
+<tasks name="recursive">
+    <option name="-ind">struct</option>
+    <option name="-indgo">off</option>
+    <option name="-tgt">off</option>
+    <option name="-ins">0</option>
+    <option name="-nm">0</option>
+    <include>/home/mhajdu/vampire_benchmarks_flat/synthesis::R_UFDT::*.smt2</include>
+</tasks>
+
+<tasks name="non-recursive-synth">
+    <option name="-qa">synthesis</option>
+    <option name="-tgt">off</option>
+    <option name="-ins">0</option>
+    <option name="-nm">0</option>
+    <include>/home/mhajdu/vampire_benchmarks_flat/synthesis::NR_*.smt2</include>
+</tasks>
+
+<tasks name="recursive-synth">
+    <option name="-qa">synthesis</option>
+    <option name="-ind">struct</option>
+    <option name="-indgo">off</option>
+    <option name="-tgt">off</option>
+    <option name="-ins">0</option>
+    <option name="-nm">0</option>
+    <include>/home/mhajdu/vampire_benchmarks_flat/synthesis::R_UFDT::*.smt2</include>
+</tasks>
+
+<columns>
+    <column title="szs-status">szs-status</column>
+    <column title="instruction-count">instruction-count</column>
+</columns>
+
+</benchmark>
+<!-- vim:fenc=utf-8 -->

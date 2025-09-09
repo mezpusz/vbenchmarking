@@ -15,7 +15,7 @@
     <option name="-ins">0</option>
     <option name="-nm">0</option>
     <include>/home/mhajdu/vampire_benchmarks_flat/synthesis::NR_*.smt2</include>
-    <includesfile>/home/mhajdu/vbenchmarking/benchmarks/tptp-synth.set</include>
+    <includesfile>/home/mhajdu/vbenchmarking/benchmarks/tptp-synth.set</includesfile>
 </tasks>
 
 <tasks name="recursive">
@@ -33,7 +33,7 @@
     <option name="-ins">0</option>
     <option name="-nm">0</option>
     <include>/home/mhajdu/vampire_benchmarks_flat/synthesis::NR_*.smt2</include>
-    <includesfile>/home/mhajdu/vbenchmarking/benchmarks/tptp-synth.set</include>
+    <includesfile>/home/mhajdu/vbenchmarking/benchmarks/tptp-synth.set</includesfile>
 </tasks>
 
 <tasks name="recursive-synth">

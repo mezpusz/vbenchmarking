@@ -10,28 +10,8 @@
     <option name="-sa">discount</option>
 </rundefinition>
 
-<tasks name="non-recursive">
-    <option name="-tgt">off</option>
-    <option name="-ins">0</option>
-    <option name="-nm">0</option>
-    <include>/home/mhajdu/vampire_benchmarks_flat/synthesis::NR_*.smt2</include>
-    <includesfile>/home/mhajdu/vbenchmarking/benchmarks/tptp-synth.set</includesfile>
-</tasks>
-
-<tasks name="recursive">
-    <option name="-ind">struct</option>
-    <option name="-indgo">off</option>
-    <option name="-tgt">off</option>
-    <option name="-ins">0</option>
-    <option name="-nm">0</option>
-    <include>/home/mhajdu/vampire_benchmarks_flat/synthesis::R_UFDT::*.smt2</include>
-</tasks>
-
 <tasks name="non-recursive-synth">
     <option name="-qa">synthesis</option>
-    <option name="-tgt">off</option>
-    <option name="-ins">0</option>
-    <option name="-nm">0</option>
     <include>/home/mhajdu/vampire_benchmarks_flat/synthesis::NR_*.smt2</include>
     <includesfile>/home/mhajdu/vbenchmarking/benchmarks/tptp-synth.set</includesfile>
 </tasks>
@@ -40,9 +20,6 @@
     <option name="-qa">synthesis</option>
     <option name="-ind">struct</option>
     <option name="-indgo">off</option>
-    <option name="-tgt">off</option>
-    <option name="-ins">0</option>
-    <option name="-nm">0</option>
     <include>/home/mhajdu/vampire_benchmarks_flat/synthesis::R_UFDT::*.smt2</include>
 </tasks>
 

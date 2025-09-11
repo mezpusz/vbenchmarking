@@ -40,6 +40,12 @@
     <include>/home/mhajdu/vampire_benchmarks_flat/induction::tip::*.smt2</include>
 </tasks>
 
+<tasks name="nonground">
+    <option name="-ind">struct</option>
+    <option name="-indgo">off</option>
+    <include>/home/mhajdu/vampire_benchmarks_flat/synthesis::R_UFDT::*.smt2</include>
+</tasks>
+
 <columns>
     <column title="szs-status">szs-status</column>
     <column title="instruction-count">instruction-count</column>

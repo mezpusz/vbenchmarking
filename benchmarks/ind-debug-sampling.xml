@@ -17,6 +17,7 @@
     <include>/home/mhajdu/inductive_benchmarks/benchmarks/flat/*.smt2</include>
     <include>/data/benchmarks/SMT-LIB/flat/UFDTLIA::20172804-Barrett::induction-vmcai2015::*.smt2</include>
     <include>/home/mhajdu/vampire_benchmarks_flat/induction::*.smt2</include>
+    <include>/home/mhajdu/vampire_benchmarks_flat/synthesis::R_UFDT::*.smt2</include>
 </tasks>
 
 <columns>

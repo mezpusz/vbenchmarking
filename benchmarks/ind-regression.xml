@@ -20,6 +20,7 @@
 <tasks name="structural">
     <option name="-ind">struct</option>
     <option name="-indoct">on</option>
+    <option name="-nui">on</option>
     <include>/data/benchmarks/SMT-LIB/flat/UFDTLIA::20172804-Barrett::induction-vmcai2015::*.smt2</include>
     <include>/home/mhajdu/inductive_benchmarks/benchmarks/flat/dty::*::crafted_*::smt2::*.smt2</include>
 </tasks>
@@ -36,12 +37,15 @@
     <option name="-sik">recursion</option>
     <option name="-newcnf">on</option>
     <option name="-indoct">on</option>
+    <option name="-nui">on</option>
     <include>/home/mhajdu/inductive_benchmarks/benchmarks/flat/dty::*::crafted_*::smt2_rec::*.smt2</include>
     <include>/home/mhajdu/vampire_benchmarks_flat/induction::tip::*.smt2</include>
 </tasks>
 
 <tasks name="nonground">
     <option name="-ind">struct</option>
+    <option name="-indoct">on</option>
+    <option name="-nui">on</option>
     <option name="-indgo">off</option>
     <include>/home/mhajdu/vampire_benchmarks_flat/synthesis::R_UFDT::*.smt2</include>
 </tasks>

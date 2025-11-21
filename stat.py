@@ -13,6 +13,7 @@ if __name__ == "__main__":
   parser.add_argument('-cputime', action=argparse.BooleanOptionalAction)
   parser.add_argument('-instructions', action=argparse.BooleanOptionalAction)
   parser.add_argument('-memory', action=argparse.BooleanOptionalAction)
+  parser.add_argument('-diff', action=argparse.BooleanOptionalAction)
   args = parser.parse_args()
 
   num_runs,header,results = parse(args.filename)
@@ -48,3 +49,13 @@ if __name__ == "__main__":
     if args.all or args.memory:
       run_str += " memory: {:.2f} MB".format(memory)
     print(run_str)
+
+  if args.all or args.diff:
+    print()
+    print('diff:')
+    for k,v in results.items():
+      if any(any(v[i][STATUS] != v[j][STATUS] for j in range(num_runs) if i != j) for i in range(num_runs)):
+        diff_str = f'{k}'
+        for i in range(num_runs):
+          diff_str += f' {i} {v[i][STATUS]}'
+        print(diff_str)

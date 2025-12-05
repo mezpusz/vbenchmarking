@@ -5,7 +5,7 @@
     cpuCores="1">
 
 <rundefinition>
-    <option name="--input_syntax">tptp</option>
+    <option name="--input_syntax">smtlib2</option>
     <option name="-i">20000</option>
     <option name="-sa">discount</option>
 </rundefinition>

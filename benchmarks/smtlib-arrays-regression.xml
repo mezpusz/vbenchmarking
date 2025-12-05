@@ -1,0 +1,30 @@
+<!DOCTYPE benchmark PUBLIC "+//IDN sosy-lab.org//DTD BenchExec benchmark 1.18//EN" "https://www.sosy-lab.org/benchexec/benchmark-1.18.dtd">
+<benchmark
+    tool="vampire"
+    memlimit="16 GB"
+    cpuCores="1">
+
+<rundefinition>
+    <option name="--input_syntax">tptp</option>
+    <option name="-i">20000</option>
+    <option name="-sa">discount</option>
+</rundefinition>
+
+<tasks>
+    <include>/data/benchmarks/SMT-LIB/flat/ALIA::*.smt2</include>
+    <include>/data/benchmarks/SMT-LIB/flat/AUFDTLIA::*.smt2</include>
+    <include>/data/benchmarks/SMT-LIB/flat/AUFDTLIRA::*.smt2</include>
+    <include>/data/benchmarks/SMT-LIB/flat/AUFDTNIRA::*.smt2</include>
+    <include>/data/benchmarks/SMT-LIB/flat/AUFLIA::*.smt2</include>
+    <include>/data/benchmarks/SMT-LIB/flat/AUFLIRA::*.smt2</include>
+    <include>/data/benchmarks/SMT-LIB/flat/AUFNIA::*.smt2</include>
+    <include>/data/benchmarks/SMT-LIB/flat/AUFNIRA::*.smt2</include>
+</tasks>
+
+<columns>
+    <column title="szs-status">szs-status</column>
+    <column title="instruction-count">instruction-count</column>
+</columns>
+
+</benchmark>
+<!-- vim:fenc=utf-8 -->

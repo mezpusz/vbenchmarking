@@ -79,12 +79,10 @@ if __name__ == "__main__":
   runner1 = Runner(args.benchmark, args.run, args.branch1)
   runner2 = Runner(args.benchmark, args.run, args.branch2)
 
-  run_cmd(f'git checkout {args.branch1}', VAMPIREDIR)
-  run_cmd(f'git checkout {args.branch2}', VAMPIREDIR)
-  # if not runner1.check_branch():
-  #   raise ValueError(f'Branch {args.branch1} does not exist')
-  # if not runner2.check_branch():
-  #   raise ValueError(f'Branch {args.branch2} does not exist')
+  if not runner1.check_branch():
+    raise ValueError(f'Branch {args.branch1} does not exist')
+  if not runner2.check_branch():
+    raise ValueError(f'Branch {args.branch2} does not exist')
 
   runner1.build_and_run()
   runner2.build_and_run()

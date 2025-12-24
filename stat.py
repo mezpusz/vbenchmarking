@@ -3,6 +3,10 @@
 import argparse
 from resultparser import parse, STATUS, CPUTIME, MEMORY, INSTRUCTIONS
 
+TRUE = 'true'
+FALSE = 'false'
+INS_LIMIT = 'OUT OF INSTRUCTIONS'
+
 if __name__ == "__main__":
 
   parser = argparse.ArgumentParser()
@@ -32,10 +36,10 @@ if __name__ == "__main__":
     def solved_unique(row, i, val):
       return row[i][STATUS] == val and len([j for j in range(num_runs) if i != j and row[j][STATUS] == val]) == 0
 
-    unsat = sum([1 for k,v in results.items() if solved(v, i, 'true')])
-    unsat_unique = sum([1 for k,v in results.items() if solved_unique(v, i, 'true')])
-    sat = sum([1 for k,v in results.items() if solved(v, i, 'false')])
-    sat_unique = sum([1 for k,v in results.items() if solved_unique(v, i, 'false')])
+    unsat = sum([1 for k,v in results.items() if solved(v, i, TRUE)])
+    unsat_unique = sum([1 for k,v in results.items() if solved_unique(v, i, TRUE)])
+    sat = sum([1 for k,v in results.items() if solved(v, i, FALSE)])
+    sat_unique = sum([1 for k,v in results.items() if solved_unique(v, i, FALSE)])
 
     run_str = f"run {i}"
     if args.all or args.unsat:
@@ -51,11 +55,32 @@ if __name__ == "__main__":
     print(run_str)
 
   if args.all or args.diff:
+
+    if num_runs != 2:
+      print('-diff only works for 2 runs')
+      exit(1)
+
+    def pred(row, val1, val2):
+      return row[0][STATUS] == val1 and row[1][STATUS] == val2
+
+    pairs = [
+      [TRUE, INS_LIMIT, 'run 0 uniquely proved'],
+      [FALSE, INS_LIMIT, 'run 0 uniquely disproved'],
+      [INS_LIMIT, TRUE, 'run 1 uniquely proved'],
+      [INS_LIMIT, FALSE, 'run 1 uniquely disproved'],
+      [TRUE, FALSE, 'run 0 unsound or run 1 incomplete'],
+      [FALSE, TRUE, 'run 0 incomplete or run 1 unsound']
+    ]
+
+    for [v1,v2,n] in pairs:
+      ks = [k for k,v in results.items() if pred(v, v1, v2)]
+      print()
+      print(f'{n}: {len(ks)}')
+      for k in ks:
+        print(k)
+
     print()
-    print('diff:')
+    print('other values')
     for k,v in results.items():
-      if any(any(v[i][STATUS] != v[j][STATUS] for j in range(num_runs) if i != j) for i in range(num_runs)):
-        diff_str = f'{k}'
-        for i in range(num_runs):
-          diff_str += f' {i} {v[i][STATUS]}'
-        print(diff_str)
+      if v[0][STATUS] != v[1][STATUS] and (v[0][STATUS] not in [TRUE, FALSE, INS_LIMIT] or v[1][STATUS] not in [TRUE, FALSE, INS_LIMIT]):
+        print(f'{k} run 0 {v[0][STATUS]} run 1 {v[1][STATUS]}')

@@ -15,11 +15,11 @@ def run_cmd(cmd, cwd=None):
     raise e
 
 class Runner:
-  def __init__(self, benchmark, run, branch):
+  def __init__(self, benchmark, run, branch, timestamp):
     self.benchmark = benchmark
     self.run = run
     self.branch = branch
-    self.timestamp = time.gmtime() # we need a timestamp for benchexec
+    self.timestamp = timestamp # we need a timestamp for benchexec
 
   def __str__(self):
     return f'{self.benchmark} {self.run} {self.branch}'
@@ -32,6 +32,12 @@ class Runner:
     if self.run:
       runStr = f'.{self.run}'
     return f'results/{self.benchmark}.{self.branch}.{time.strftime("%Y-%m-%d_%H-%M-%S", self.timestamp)}.results{runStr}.xml.bz2'
+
+  def summary_file(self):
+    runStr = ""
+    if self.run:
+      runStr = f'.{self.run}'
+    return f'results/{self.benchmark}.{time.strftime("%Y-%m-%d_%H-%M-%S", self.timestamp)}.results{runStr}.txt'
 
   def build_and_run(self):
     print(f'building {self.branch}...')
@@ -64,7 +70,8 @@ def results_for_run(runner1, runner2):
   run_cmd(f'table-generator -x {BENCHMARKINGDIR}/results.xml -f csv -q \
     {runner1.result_file()} {runner2.result_file()}')
 
-  subprocess.check_call(f'python3 {BENCHMARKINGDIR}/stat.py -all {BENCHMARKINGDIR}/results.table.csv', shell=True)
+  run_cmd(f'python3 {BENCHMARKINGDIR}/stat.py -all \
+    {BENCHMARKINGDIR}/results.table.csv > {runner1.summary_file()}')
 
 
 if __name__ == "__main__":
@@ -76,8 +83,9 @@ if __name__ == "__main__":
   parser.add_argument('-run')
   args = parser.parse_args()
 
-  runner1 = Runner(args.benchmark, args.run, args.branch1)
-  runner2 = Runner(args.benchmark, args.run, args.branch2)
+  timestamp = time.gmtime()
+  runner1 = Runner(args.benchmark, args.run, args.branch1, timestamp)
+  runner2 = Runner(args.benchmark, args.run, args.branch2, timestamp)
 
   if not runner1.check_branch():
     raise ValueError(f'Branch {args.branch1} does not exist')

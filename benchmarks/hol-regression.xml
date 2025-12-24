@@ -17,12 +17,8 @@
 </rundefinition>
 
 <tasks>
-    <includesfile>/home/mhajdu/vbenchmarking/benchmarks/tptp_CNF.set</includesfile>
-    <includesfile>/home/mhajdu/vbenchmarking/benchmarks/tptp_FOF.set</includesfile>
-    <includesfile>/home/mhajdu/vbenchmarking/benchmarks/tptp_TF0.set</includesfile>
-    <includesfile>/home/mhajdu/vbenchmarking/benchmarks/tptp_TF1.set</includesfile>
-    <includesfile>/home/mhajdu/vbenchmarking/benchmarks/tptp_TX0.set</includesfile>
-    <includesfile>/home/mhajdu/vbenchmarking/benchmarks/tptp_TX1.set</includesfile>
+    <includesfile>/home/mhajdu/vbenchmarking/benchmarks/tptp_TH0.set</includesfile>
+    <includesfile>/home/mhajdu/vbenchmarking/benchmarks/tptp_TH1.set</includesfile>
 </tasks>
 
 <columns>

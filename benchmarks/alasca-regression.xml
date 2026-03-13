@@ -1,0 +1,49 @@
+<!DOCTYPE benchmark PUBLIC "+//IDN sosy-lab.org//DTD BenchExec benchmark 1.18//EN" "https://www.sosy-lab.org/benchexec/benchmark-1.18.dtd">
+<benchmark
+    tool="vampire"
+    memlimit="16 GB"
+    cpuCores="1">
+
+<rundefinition>
+    <option name="-i">5000</option>
+    <option name="-sa">discount</option>
+    <option name="-alasca">on</option>
+    <option name="-p">off</option>
+</rundefinition>
+
+<tasks name="tptp">
+    <option name="--input_syntax">tptp</option>
+    <include>/data/benchmarks/TPTP/Problems/ARI/ARI*.p</include>
+</tasks>
+
+<tasks name="smtlib">
+    <option name="--input_syntax">smtlib2</option>
+    <include>/data/benchmarks/SMT-LIB/flat/ALIA::*.smt2</include>
+    <include>/data/benchmarks/SMT-LIB/flat/AUFDTLIA::*.smt2</include>
+    <include>/data/benchmarks/SMT-LIB/flat/AUFDTLIRA::*.smt2</include>
+    <include>/data/benchmarks/SMT-LIB/flat/AUFDTNIRA::*.smt2</include>
+    <include>/data/benchmarks/SMT-LIB/flat/AUFLIA::*.smt2</include>
+    <include>/data/benchmarks/SMT-LIB/flat/AUFLIRA::*.smt2</include>
+    <include>/data/benchmarks/SMT-LIB/flat/AUFNIA::*.smt2</include>
+    <include>/data/benchmarks/SMT-LIB/flat/AUFNIRA::*.smt2</include>
+    <include>/data/benchmarks/SMT-LIB/flat/LIA::*.smt2</include>
+    <include>/data/benchmarks/SMT-LIB/flat/LRA::*.smt2</include>
+    <include>/data/benchmarks/SMT-LIB/flat/NIA::*.smt2</include>
+    <include>/data/benchmarks/SMT-LIB/flat/NRA::*.smt2</include>
+    <include>/data/benchmarks/SMT-LIB/flat/QF_LIA::*.smt2</include>
+    <include>/data/benchmarks/SMT-LIB/flat/UFDTLIA::*.smt2</include>
+    <include>/data/benchmarks/SMT-LIB/flat/UFDTLIRA::*.smt2</include>
+    <include>/data/benchmarks/SMT-LIB/flat/UFDTNIA::*.smt2</include>
+    <include>/data/benchmarks/SMT-LIB/flat/UFDTNIRA::*.smt2</include>
+    <include>/data/benchmarks/SMT-LIB/flat/UFLIA::*.smt2</include>
+    <include>/data/benchmarks/SMT-LIB/flat/UFLRA::*.smt2</include>
+    <include>/data/benchmarks/SMT-LIB/flat/UFNIA::*.smt2</include>
+</tasks>
+
+<columns>
+    <column title="szs-status">szs-status</column>
+    <column title="instruction-count">instruction-count</column>
+</columns>
+
+</benchmark>
+<!-- vim:fenc=utf-8 -->

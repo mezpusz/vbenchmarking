@@ -74,25 +74,33 @@ def results_for_run(runner1, runner2):
     {BENCHMARKINGDIR}/results.table.csv > {runner1.summary_file()}')
 
 
+def compare(benchmark, run, branch1, branch2):
+  timestamp = time.gmtime()
+  runner1 = Runner(benchmark, run, branch1, timestamp)
+  runner2 = Runner(benchmark, run, branch2, timestamp)
+
+  if not runner1.check_branch():
+    raise ValueError(f'Branch {branch1} does not exist')
+  if not runner2.check_branch():
+    raise ValueError(f'Branch {branch2} does not exist')
+
+  runner1.build_and_run()
+  runner2.build_and_run()
+
+  results_for_run(runner1, runner2)
+
+
 if __name__ == "__main__":
 
   parser = argparse.ArgumentParser()
   parser.add_argument('benchmark')
   parser.add_argument('-branch1', default='master')
   parser.add_argument('-branch2')
-  parser.add_argument('-run')
+  parser.add_argument('-runs')
   args = parser.parse_args()
 
-  timestamp = time.gmtime()
-  runner1 = Runner(args.benchmark, args.run, args.branch1, timestamp)
-  runner2 = Runner(args.benchmark, args.run, args.branch2, timestamp)
-
-  if not runner1.check_branch():
-    raise ValueError(f'Branch {args.branch1} does not exist')
-  if not runner2.check_branch():
-    raise ValueError(f'Branch {args.branch2} does not exist')
-
-  runner1.build_and_run()
-  runner2.build_and_run()
-
-  results_for_run(runner1, runner2)
+  if args.runs:
+    for run in args.runs.split(','):
+      compare(args.benchmark, run, args.branch1, args.branch2)
+  else:
+    compare(args.benchmark, None, args.branch1, args.branch2)

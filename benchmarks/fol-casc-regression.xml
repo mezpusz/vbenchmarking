@@ -1,0 +1,29 @@
+<!DOCTYPE benchmark PUBLIC "+//IDN sosy-lab.org//DTD BenchExec benchmark 1.18//EN" "https://www.sosy-lab.org/benchexec/benchmark-1.18.dtd">
+<benchmark
+    tool="vampire"
+    memlimit="16 GB"
+    cpuCores="8">
+
+<rundefinition>
+    <option name="--input_syntax">tptp</option>
+    <option name="-t">300</option>
+    <option name="--mode">casc</option>
+    <option name="--cores">8</option>
+</rundefinition>
+
+<tasks>
+    <includesfile>/home/mhajdu/vbenchmarking/benchmarks/tptp_CNF.set</includesfile>
+    <includesfile>/home/mhajdu/vbenchmarking/benchmarks/tptp_FOF.set</includesfile>
+    <includesfile>/home/mhajdu/vbenchmarking/benchmarks/tptp_TF0.set</includesfile>
+    <includesfile>/home/mhajdu/vbenchmarking/benchmarks/tptp_TF1.set</includesfile>
+    <includesfile>/home/mhajdu/vbenchmarking/benchmarks/tptp_TX0.set</includesfile>
+    <includesfile>/home/mhajdu/vbenchmarking/benchmarks/tptp_TX1.set</includesfile>
+</tasks>
+
+<columns>
+    <column title="szs-status">szs-status</column>
+    <column title="instruction-count">instruction-count</column>
+</columns>
+
+</benchmark>
+<!-- vim:fenc=utf-8 -->

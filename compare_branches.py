@@ -54,7 +54,7 @@ class Runner:
 
     print(f'running {self.branch}...')
     run_cmd(f'benchexec --no-container \
-              --numOfThreads 60 \
+              -N 60 -c -1 \
               --tool-directory "{BUILDDIR}" \
               --name "{self.branch}" \
               {runOption} \

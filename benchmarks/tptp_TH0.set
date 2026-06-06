@@ -200,7 +200,6 @@
 /data/benchmarks/TPTP/Problems/CSR/CSR153^1.p
 /data/benchmarks/TPTP/Problems/CSR/CSR153^2.p
 /data/benchmarks/TPTP/Problems/CSR/CSR153^3.p
-/data/benchmarks/TPTP/Problems/DAT/DAT002^1.p
 /data/benchmarks/TPTP/Problems/DAT/DAT056^1.p
 /data/benchmarks/TPTP/Problems/DAT/DAT056^2.p
 /data/benchmarks/TPTP/Problems/DAT/DAT333^3.p
@@ -1403,7 +1402,6 @@
 /data/benchmarks/TPTP/Problems/NUM/NUM926^2.p
 /data/benchmarks/TPTP/Problems/NUM/NUM926^3.p
 /data/benchmarks/TPTP/Problems/NUN/NUN021^1.p
-/data/benchmarks/TPTP/Problems/NUN/NUN022^1.p
 /data/benchmarks/TPTP/Problems/NUN/NUN023^1.p
 /data/benchmarks/TPTP/Problems/NUN/NUN023^2.p
 /data/benchmarks/TPTP/Problems/NUN/NUN024^1.p
@@ -3069,7 +3067,6 @@
 /data/benchmarks/TPTP/Problems/SWW/SWW971^15.p
 /data/benchmarks/TPTP/Problems/SWW/SWW971^5.p
 /data/benchmarks/TPTP/Problems/SYN/SYN000^1.p
-/data/benchmarks/TPTP/Problems/SYN/SYN000^2.p
 /data/benchmarks/TPTP/Problems/SYN/SYN001^4.001.p
 /data/benchmarks/TPTP/Problems/SYN/SYN001^4.002.p
 /data/benchmarks/TPTP/Problems/SYN/SYN001^4.003.p

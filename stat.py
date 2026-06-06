@@ -18,12 +18,18 @@ if __name__ == "__main__":
   parser.add_argument('-instructions', action=argparse.BooleanOptionalAction)
   parser.add_argument('-memory', action=argparse.BooleanOptionalAction)
   parser.add_argument('-diff', action=argparse.BooleanOptionalAction)
+  parser.add_argument('-run_names')
   args = parser.parse_args()
 
   num_runs,header,results = parse(args.filename)
 
   print(f'total number of benchmarks {len(results)}')
   print()
+
+  if args.run_names:
+    for i,n in enumerate(args.run_names.split(',')):
+      print(f"run {i}: {n}")
+    print()
 
   for i in range(num_runs):
     cputime = sum([float(v[i][CPUTIME]) for k,v in results.items()]) if CPUTIME in header else None

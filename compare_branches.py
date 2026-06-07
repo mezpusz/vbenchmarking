@@ -70,7 +70,7 @@ def results_for_run(runner1, runner2):
   run_cmd(f'table-generator -x {BENCHMARKINGDIR}/results.xml -f csv -q \
     {runner1.result_file()} {runner2.result_file()}')
 
-  run_cmd(f'python3 {BENCHMARKINGDIR}/stat.py -all -run_names {runner1.branch},{runner2.branch} \
+  run_cmd(f'python3 {BENCHMARKINGDIR}/stat.py -all \
     {BENCHMARKINGDIR}/results.table.csv > {runner1.summary_file()}')
 
 

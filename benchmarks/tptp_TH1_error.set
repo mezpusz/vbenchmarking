@@ -20,6 +20,14 @@
 /data/benchmarks/TPTP/Problems/ANA/ANA065^1.p
 /data/benchmarks/TPTP/Problems/ANA/ANA066^1.p
 /data/benchmarks/TPTP/Problems/ANA/ANA067^1.p
+/data/benchmarks/TPTP/Problems/COM/COM155^1.p
+/data/benchmarks/TPTP/Problems/COM/COM156^1.p
+/data/benchmarks/TPTP/Problems/COM/COM180^1.p
+/data/benchmarks/TPTP/Problems/COM/COM181^1.p
+/data/benchmarks/TPTP/Problems/COM/COM188^1.p
+/data/benchmarks/TPTP/Problems/COM/COM191^1.p
+/data/benchmarks/TPTP/Problems/COM/COM198^1.p
+/data/benchmarks/TPTP/Problems/COM/COM199^1.p
 /data/benchmarks/TPTP/Problems/GEO/GEO356^1.p
 /data/benchmarks/TPTP/Problems/GEO/GEO357^1.p
 /data/benchmarks/TPTP/Problems/GEO/GEO358^1.p
@@ -218,3 +226,4 @@
 /data/benchmarks/TPTP/Problems/RAL/RAL070^1.p
 /data/benchmarks/TPTP/Problems/SEV/SEV442^1.p
 /data/benchmarks/TPTP/Problems/SEV/SEV443^1.p
+/data/benchmarks/TPTP/Problems/SYN/SYN000^3.p

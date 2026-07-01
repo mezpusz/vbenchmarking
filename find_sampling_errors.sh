@@ -1,3 +1,3 @@
 #!/bin/bash
 
-grep -rn "viola\|SIG\|Error\|error\|Invalid\|Broken" ${1}
+grep -Irn "viola\|SIG\|Error\|error\|Invalid\|Broken" ${1}

@@ -1,0 +1,14 @@
+<!DOCTYPE benchmark PUBLIC "+//IDN sosy-lab.org//DTD BenchExec benchmark 1.18//EN" "https://www.sosy-lab.org/benchexec/benchmark-1.18.dtd">
+<benchmark
+    tool="gdv"
+    memlimit="16 GB"
+    cpuCores="1">
+
+<rundefinition name="default"/>
+
+<tasks>
+    <include>FOLDER/*</include>
+</tasks>
+
+</benchmark>
+<!-- vim:fenc=utf-8 -->

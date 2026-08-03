@@ -75,8 +75,7 @@ def results_for_run(runner1, runner2):
     {BENCHMARKINGDIR}/results.table.csv > {runner1.summary_file()}')
 
 
-def compare(benchmark, run, remote1, branch1, remote2, branch2):
-  timestamp = time.gmtime()
+def compare(benchmark, run, timestamp, remote1, branch1, remote2, branch2):
   runner1 = Runner(benchmark, run, remote1, branch1, timestamp)
   runner2 = Runner(benchmark, run, remote2, branch2, timestamp)
 
@@ -102,8 +101,10 @@ if __name__ == "__main__":
   parser.add_argument('-runs')
   args = parser.parse_args()
 
+  timestamp = time.gmtime()
+
   if args.runs:
     for run in args.runs.split(','):
-      compare(args.benchmark, run, args.remote1, args.branch1, args.remote2, args.branch2)
+      compare(args.benchmark, run, timestamp, args.remote1, args.branch1, args.remote2, args.branch2)
   else:
-    compare(args.benchmark, None, args.remote1, args.branch1, args.remote2, args.branch2)
+    compare(args.benchmark, None, timestamp, args.remote1, args.branch1, args.remote2, args.branch2)

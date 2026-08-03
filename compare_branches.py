@@ -15,23 +15,24 @@ def run_cmd(cmd, cwd=None):
     raise e
 
 class Runner:
-  def __init__(self, benchmark, run, branch, timestamp):
+  def __init__(self, benchmark, run, remote, branch, timestamp):
     self.benchmark = benchmark
     self.run = run
+    self.remote = remote
     self.branch = branch
     self.timestamp = timestamp # we need a timestamp for benchexec
 
   def __str__(self):
-    return f'{self.benchmark} {self.run} {self.branch}'
+    return f'{self.benchmark} {self.run} {self.remote}/{self.branch}'
 
   def check_branch(self):
-    return len(subprocess.check_output(f'git ls-remote --heads origin "refs/heads/{args.branch1}"', shell=True, cwd=VAMPIREDIR)) > 0
+    return len(subprocess.check_output(f'git ls-remote --heads {self.remote} "refs/heads/{args.branch1}"', shell=True, cwd=VAMPIREDIR)) > 0
 
   def result_file(self):
     runStr = ""
     if self.run:
       runStr = f'.{self.run}'
-    return f'results/{self.benchmark}.{self.branch}.{time.strftime("%Y-%m-%d_%H-%M-%S", self.timestamp)}.results{runStr}.xml.bz2'
+    return f'results/{self.benchmark}.{self.remote}.{self.branch}.{time.strftime("%Y-%m-%d_%H-%M-%S", self.timestamp)}.results{runStr}.xml.bz2'
 
   def summary_file(self):
     runStr = ""
@@ -40,10 +41,10 @@ class Runner:
     return f'results/{self.benchmark}.{time.strftime("%Y-%m-%d_%H-%M-%S", self.timestamp)}.results{runStr}.txt'
 
   def build_and_run(self):
-    print(f'building {self.branch}...')
+    print(f'building {self.remote}/{self.branch}...')
     run_cmd('git fetch', VAMPIREDIR)
-    run_cmd(f'git checkout {self.branch}', VAMPIREDIR)
-    run_cmd('git rebase', VAMPIREDIR)
+    run_cmd(f'git checkout {self.remote}/{self.branch}', VAMPIREDIR)
+    run_cmd(f'git pull {self.remote} {self.branch} --rebase', VAMPIREDIR)
     run_cmd('cmake .', BUILDDIR)
     run_cmd('make -j60', BUILDDIR)
     subprocess.check_output('./vampire --version', shell=True, cwd=BUILDDIR)
@@ -56,7 +57,7 @@ class Runner:
     run_cmd(f'benchexec --no-container \
               -N 60 -c -1 \
               --tool-directory "{BUILDDIR}" \
-              --name "{self.branch}" \
+              --name "{self.remote}.{self.branch}" \
               {runOption} \
               --startTime "{time.strftime("%Y-%m-%d %H:%M:%S", self.timestamp)}" \
               "{os.path.join(BENCHMARKINGDIR, "benchmarks", self.benchmark)}.xml"')
@@ -74,15 +75,15 @@ def results_for_run(runner1, runner2):
     {BENCHMARKINGDIR}/results.table.csv > {runner1.summary_file()}')
 
 
-def compare(benchmark, run, branch1, branch2):
+def compare(benchmark, run, remote1, branch1, remote2, branch2):
   timestamp = time.gmtime()
-  runner1 = Runner(benchmark, run, branch1, timestamp)
-  runner2 = Runner(benchmark, run, branch2, timestamp)
+  runner1 = Runner(benchmark, run, remote1, branch1, timestamp)
+  runner2 = Runner(benchmark, run, remote2, branch2, timestamp)
 
   if not runner1.check_branch():
-    raise ValueError(f'Branch {branch1} does not exist')
+    raise ValueError(f'Branch {remote1}/{branch1} does not exist')
   if not runner2.check_branch():
-    raise ValueError(f'Branch {branch2} does not exist')
+    raise ValueError(f'Branch {remote2}/{branch2} does not exist')
 
   runner1.build_and_run()
   runner2.build_and_run()
@@ -94,13 +95,15 @@ if __name__ == "__main__":
 
   parser = argparse.ArgumentParser()
   parser.add_argument('benchmark')
+  parser.add_argument('-remote1', default='origin')
   parser.add_argument('-branch1', default='master')
+  parser.add_argument('-remote2', default='origin')
   parser.add_argument('-branch2')
   parser.add_argument('-runs')
   args = parser.parse_args()
 
   if args.runs:
     for run in args.runs.split(','):
-      compare(args.benchmark, run, args.branch1, args.branch2)
+      compare(args.benchmark, run, args.remote1, args.branch1, args.remote2, args.branch2)
   else:
-    compare(args.benchmark, None, args.branch1, args.branch2)
+    compare(args.benchmark, None, args.remote1, args.branch1, args.remote2, args.branch2)

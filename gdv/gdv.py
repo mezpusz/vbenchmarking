@@ -23,7 +23,7 @@ class Tool(benchexec.tools.template.BaseTool2):
         return "https://github.com/"
 
     def executable(self, tool_locator):
-        return tool_locator.find_executable("gdv_wrapper.sh")
+        return tool_locator.find_executable("GDV")
 
     def version(self, executable):
         return "1.0"

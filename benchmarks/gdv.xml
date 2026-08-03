@@ -4,7 +4,10 @@
     memlimit="16 GB"
     cpuCores="1">
 
-<rundefinition name="default"/>
+<rundefinition name="default">
+    <option name="-d"/>
+    <option name="-u"/>
+</rundefinition>
 
 <tasks>
     <include>FOLDER/*</include>

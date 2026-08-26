@@ -5,9 +5,12 @@ import argparse, subprocess, time, os
 VAMPIREDIR = '/home/mhajdu/vampire'
 BUILDDIR = os.path.join(VAMPIREDIR, 'cmake-build')
 BENCHMARKINGDIR = '/home/mhajdu/vbenchmarking'
+DRY_RUN = False
 
 def run_cmd(cmd, cwd=None):
   print(f'running {cmd}')
+  if DRY_RUN:
+    return
   try:
     subprocess.check_call(cmd, shell=True, cwd=cwd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
   except subprocess.CalledProcessError as e:
@@ -23,13 +26,15 @@ class Runner:
     self.timestamp = timestamp # we need a timestamp for benchexec
 
   def __str__(self):
-    return f'{self.benchmark} {self.run} {self.remote}/{self.branch}'
+    return self.run_id()
 
-  def check_branch(self):
-    return len(subprocess.check_output(f'git ls-remote --heads {self.remote} "refs/heads/{args.branch1}"', shell=True, cwd=VAMPIREDIR)) > 0
+  def fetch(self):
+    run_cmd(f'git fetch {self.remote} {self.branch}', VAMPIREDIR)
 
   def run_id(self):
-    return f"{self.remote}.{self.branch}.{self.run if self.run else ""}"
+    runStr = f".{self.run}" if self.run else ""
+    # replace slashes with dots in branch name to avoid bad filenames
+    return f"{self.remote}.{self.branch.replace('/', '.')}{runStr}"
 
   def result_file(self):
     runStr = ""
@@ -44,19 +49,18 @@ class Runner:
     return f'results/{self.benchmark}.{time.strftime("%Y-%m-%d_%H-%M-%S", self.timestamp)}.results{runStr}.txt'
 
   def build_and_run(self):
-    print(f'building {self.remote}/{self.branch}...')
-    run_cmd('git fetch', VAMPIREDIR)
-    run_cmd(f'git checkout {self.remote}/{self.branch}', VAMPIREDIR)
-    run_cmd(f'git pull {self.remote} {self.branch} --rebase', VAMPIREDIR)
+    print(f'building {self.run_id()}...')
+    self.fetch()
+    run_cmd(f'git checkout FETCH_HEAD', VAMPIREDIR)
     run_cmd('cmake .', BUILDDIR)
     run_cmd('make -j60', BUILDDIR)
-    subprocess.check_output('./vampire --version', shell=True, cwd=BUILDDIR)
+    run_cmd('./vampire --version', BUILDDIR)
 
     runOption = ""
     if self.run:
       runOption = f'-r "{self.run}"'
 
-    print(f'running {self.branch}...')
+    print(f'running {self.run_id()}...')
     run_cmd(f'benchexec --no-container \
               -N 60 -c -1 \
               --tool-directory "{BUILDDIR}" \
@@ -82,10 +86,9 @@ def compare(benchmark, run, timestamp, remote1, branch1, remote2, branch2):
   runner1 = Runner(benchmark, run, remote1, branch1, timestamp)
   runner2 = Runner(benchmark, run, remote2, branch2, timestamp)
 
-  if not runner1.check_branch():
-    raise ValueError(f'Branch {remote1}/{branch1} does not exist')
-  if not runner2.check_branch():
-    raise ValueError(f'Branch {remote2}/{branch2} does not exist')
+  # precheck that both branches exist
+  runner1.fetch()
+  runner2.fetch()
 
   runner1.build_and_run()
   runner2.build_and_run()

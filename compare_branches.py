@@ -28,11 +28,14 @@ class Runner:
   def check_branch(self):
     return len(subprocess.check_output(f'git ls-remote --heads {self.remote} "refs/heads/{args.branch1}"', shell=True, cwd=VAMPIREDIR)) > 0
 
+  def run_id(self):
+    return f"{self.remote}.{self.branch}.{self.run if self.run else ""}"
+
   def result_file(self):
     runStr = ""
     if self.run:
       runStr = f'.{self.run}'
-    return f'results/{self.benchmark}.{self.remote}.{self.branch}.{time.strftime("%Y-%m-%d_%H-%M-%S", self.timestamp)}.results{runStr}.xml.bz2'
+    return f'results/{self.benchmark}.{self.run_id()}.{time.strftime("%Y-%m-%d_%H-%M-%S", self.timestamp)}.results{runStr}.xml.bz2'
 
   def summary_file(self):
     runStr = ""
@@ -57,7 +60,7 @@ class Runner:
     run_cmd(f'benchexec --no-container \
               -N 60 -c -1 \
               --tool-directory "{BUILDDIR}" \
-              --name "{self.remote}.{self.branch}" \
+              --name "{self.run_id()}" \
               {runOption} \
               --startTime "{time.strftime("%Y-%m-%d %H:%M:%S", self.timestamp)}" \
               "{os.path.join(BENCHMARKINGDIR, "benchmarks", self.benchmark)}.xml"')

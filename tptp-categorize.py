@@ -51,7 +51,9 @@ if __name__ == "__main__":
       if prb_spc is None:
         print(f'  Problem {prb} has no SPC line')
 
-      prb_cat = prb_spc[:prb_spc.find('_')]
+      prb_spc = prb_spc[:-1]
+      prb_split = prb_spc.split('_')
+      prb_cat = prb_split[0]
       result.setdefault(prb_cat, list())
       result[prb_cat].append(os.path.join(cat,prb))
 
